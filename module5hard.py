@@ -41,14 +41,15 @@ class UrTube:
         else:
             print("Неверный логин или пароль")
 
-    def add(self, video):
-        self.videos.append(video)
-        print(f"Видео успешно добавлено.")
+    def add(self, *videos: Video):
+        for video in videos:
+            if video.title not in self.videos:
+                self.videos.append(video)
 
     def get_videos(self, title):
         for video in self.videos:
             if title.upper() in video.title.upper():
-                print(video.title)
+                return video.title
 
     def watch_video(self, title):
         user = self.current_user
@@ -65,8 +66,6 @@ class UrTube:
                             print("Вы смотрите видео на секунде: ", video.time_now)
                             time.sleep(1)
 
-                print("Конец видео")
-
 if __name__ == "__main__":
     ur = UrTube()
     v1 = Video('Лучший язык программирования 2024 года', 200)
@@ -76,8 +75,8 @@ if __name__ == "__main__":
     ur.add(v1, v2)
 
     # Проверка поиска
-    #print(ur.get_videos('лучший'))
-    #print(ur.get_videos('ПРОГ'))
+    print(ur.get_videos('лучший'))
+    print(ur.get_videos('ПРОГ'))
 
     # Проверка на вход пользователя и возрастное ограничение
     ur.watch_video('Для чего девушкам парень программист?')
@@ -91,8 +90,7 @@ if __name__ == "__main__":
     print(ur.current_user)
 
     # Попытка воспроизведения несуществующего видео
-    #ur.watch_video('Лучший язык программирования 2024 года!')
-
+    ur.watch_video('Лучший язык программирования 2024 года!')
 
 
 
